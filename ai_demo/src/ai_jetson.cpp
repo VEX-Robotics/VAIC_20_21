@@ -249,9 +249,17 @@ jetson::parse( uint8_t data ) {
 
       case jetson_state::kStateGoodPacket:
         if( payload_type == MAP_PACKET_TYPE ) {
+          MAP_RECORD newMap;
+          // Parse the payload packet into a MAP_RECORD
+          memset(&newMap, 0, sizeof(newMap));
+          memcpy(&newMap, &payload.bytes[0], MAP_POS_SIZE);
+          memcpy(&newMap.boxobj, &payload.bytes[MAP_POS_SIZE], sizeof(fifo_object_box) * newMap.boxnum);
+          memcpy(&newMap.mapobj, &payload.bytes[((sizeof(fifo_object_box) * newMap.boxnum)+MAP_POS_SIZE)], sizeof(MAP_OBJECTS) * newMap.mapnum);
+
+
           // lock access to last_map and copy data
           maplock.lock();
-          memcpy( &last_map, &payload.map, sizeof(MAP_RECORD));
+          memcpy( &last_map, &newMap, sizeof(MAP_RECORD));
           maplock.unlock();
         }
 

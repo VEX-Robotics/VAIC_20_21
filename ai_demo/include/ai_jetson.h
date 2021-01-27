@@ -25,25 +25,39 @@ extern "C" {
 
 #define	MAX_OBJECT		50		// Maximum number of detected objects
 
+
+/// This structure represents a visual detection of a VEX object from the forward facing depth camera.
+/// The X,Y coordinates values are pixel offsets from the top left corner of the video surface.
+/// Max X = 320
+/// Max Y = 240
+/// Width and Height are also in pixels 
+/// 
 typedef struct {
 	int32_t		x, y;			      // The center position of this object where 0,0 is the upper left
 	int32_t		width, height;	// The width and height of the bounding box of this object
-	int32_t		classID;		    // The class id of this object
-	float	    depth;			    // The depth of this object
-	float	    prob;		  	    // The probability that this object is in this class
+	int32_t		classID;		    // The class id of this object (0 = Red 1 = Blue 2 = Goal)
+	float	    depth;			    // The depth of this object in mm from the camera
+	float	    prob;		  	    // The probability that this object is in this class (1.0 == 100%)
 } fifo_object_box;
 
 typedef struct {
-	int32_t		framecnt;
-	int32_t		status;
-	float	    x, y, z;
-	float	    az, el, rot;
+	int32_t		framecnt;       // This counter increments each frame
+	int32_t		status;         // 0 = All Good, != 0 = Not All Good
+	float	    x, y, z;        // X,Y,Z field coordinates in millimeters. Position 0,0 is in the middle of the field.
+                            // Z is mm from the field tiles.
+                            // NOTE: These coordinates are for the GPS sensor (FLIR Camera) If you want to know the location of the 
+                            // center of your robot you will have add an offset. 
+	float	    az;             // Rotation of the robot in radians (Heading)
+  float     el;             // Elevation of the robot in radians (Pitch)
+  float     rot;            // Rotation/Tilt of the robot in radians (Roll)
 } POS_RECORD;
 
 typedef struct {
 	int32_t		age;		        // The number of iterations since the last valid measurement
 	int32_t		classID;	      // The class ID of the object  0: red,  1: blue
-	float	    p[3];		        // Position
+  float     positionX;      // X position field coordinates in millimeters. Position 0,0 is in the middle of the field.
+  float     positionY;      // Y position field coordinates in millimeters. Position 0,0 is in the middle of the field.
+  float     positionZ;      // Z position field coordinates in millimeters. Z represents height above the field tiles.
 } MAP_OBJECTS;
 
 // The MAP_RECORD contains everything

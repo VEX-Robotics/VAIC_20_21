@@ -63,12 +63,13 @@ dashboardJetson( int ox, int oy, int width, int height ) {
   Brain.Screen.setFont( mono12 );
   for(int i=0;i<4;i++ ) {
     if( i < local_map.boxnum ) {
-      Brain.Screen.printAt( ox + 10, oy += 12, "box %d: x:%4d y:%4d w:%4d h:%4d d:%.1f",i,
-                           local_map.boxobj[i].x,
-                           local_map.boxobj[i].y,
-                           local_map.boxobj[i].width,
-                           local_map.boxobj[i].height,
-                           local_map.boxobj[i].depth );
+      Brain.Screen.printAt( ox + 10, oy += 12, "box %d: c:%d x:%d y:%d w:%d h:%d prob:%.1f",i,
+                           (local_map.boxobj[i].classID), //Class ID (0 = Red 1 = Blue 2 = Goal)
+                           (local_map.boxobj[i].x), //in pixels
+                           (local_map.boxobj[i].y), //in pixels
+                           (local_map.boxobj[i].width), //in pixels
+                           (local_map.boxobj[i].height), //in pixels
+                           (local_map.boxobj[i].prob)); //percent likely to be in this catagory
     }
     else {
       Brain.Screen.printAt( ox + 10, oy += 12, "---");
@@ -76,12 +77,12 @@ dashboardJetson( int ox, int oy, int width, int height ) {
   }
   for(int i=0;i<4;i++ ) {
     if( i < local_map.mapnum ) {
-      Brain.Screen.printAt( ox + 10, oy += 12, "map %d: a:%4d c:%4d 0:%.2f 1:%.2f 2:%.1f",i,
+      Brain.Screen.printAt( ox + 10, oy += 12, "map %d: a:%4d c:%4d X:%.2f Y:%.2f Z:%.1f",i,
                            local_map.mapobj[i].age,
                            local_map.mapobj[i].classID,
-                           local_map.mapobj[i].p[0],
-                           local_map.mapobj[i].p[1],
-                           local_map.mapobj[i].p[2]);
+                           (local_map.mapobj[i].positionX / -25.4),  // mm -> inches
+                           (local_map.mapobj[i].positionY / -25.4),  // mm -> inches
+                           (local_map.mapobj[i].positionZ / 25.4)); // mm -> inches
     }
     else {
       Brain.Screen.printAt( ox + 10, oy += 12, "---");
@@ -152,18 +153,18 @@ dashboardVexlink( int ox, int oy, int width, int height ) {
   float x,y,heading;
   link.get_local_location(x, y, heading);
   
-  Brain.Screen.printAt( ox + 10, oy += 15, " X:   %.2f", x);
-  Brain.Screen.printAt( ox + 10, oy += 15, " Y:   %.2f", y);
-  Brain.Screen.printAt( ox + 10, oy += 15, " H:   %.2f", heading);
+Brain.Screen.printAt( ox + 10, oy += 15, " X:   %.2f", x / -25.4);  // mm -> inches
+  Brain.Screen.printAt( ox + 10, oy += 15, " Y:   %.2f", y / -25.4);  // mm -> inches
+  Brain.Screen.printAt( ox + 10, oy += 15, " H:   %.2f", 180 - (heading / (-2 * M_PI ) * 360) ); // rads to deg
 
   oy += 5;
   Brain.Screen.printAt( ox + 10, oy += 15, "Location: remote");
   
   link.get_remote_location(x, y, heading);
   
-  Brain.Screen.printAt( ox + 10, oy += 15, " X:   %.2f", x);
-  Brain.Screen.printAt( ox + 10, oy += 15, " Y:   %.2f", y);
-  Brain.Screen.printAt( ox + 10, oy += 15, " H:   %.2f", heading);
+Brain.Screen.printAt( ox + 10, oy += 15, " X:   %.2f", x / -25.4);  // mm -> inches
+  Brain.Screen.printAt( ox + 10, oy += 15, " Y:   %.2f", y / -25.4);  // mm -> inches
+  Brain.Screen.printAt( ox + 10, oy += 15, " H:   %.2f", 180 - (heading / (-2 * M_PI ) * 360) ); // rads to deg
 }
 
 //
