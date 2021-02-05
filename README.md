@@ -1,19 +1,8 @@
 # VAIC_20_21
-This repository contains V5 example code and documentation for VEX AI Competition 2020/2021. For more help with the VEX AI System, check out the <a href="#additional-resources">Additional Resources</a> section below.
+This repository contains example code and documentation for VEX AI Competition 2020/2021. For more help with the VEX AI System, check out the <a href="#additional-resources">Additional Resources</a> section below.
 
-# Nvidia Jetson Nano to VEX V5 Brain Communications:
-This git project contains an VEXcode Pro V5 example project, which uses a new class that is a subclass of the vex::serial_link class. The new class adds the background tasks needed to keep robot to robot communication running and demonstrates a simple protocol for exchanging location data between robots.
-
-<img src="https://kb.vex.com/hc/article_attachments/360068664092/ai_demo.png"></img>
-
-The example project can be built for either manager or worker robot, it’s completely symmetrical. To switch between these modes, comment or un-comment the following line in main.cpp to control the build:
-#define MANAGER_ROBOT 1
-
-
-# VEX V5 Robot-to-Robot Communications (VEXlink):
-The new VEXlink features have been added to the latest version of VEXcode Pro V5 (versions 2.0.2 and later). Downloaded VEXcode Pro V5 <a href="https://www.vexrobotics.com/vexcode-download">here</a>.
-
-For more detailed information on using the V5 VEXlink API, <a href="https://drive.google.com/file/d/13mTA6BT7CPskJzh4YgsfAfoH9OgK75Hn/view">this document</a> explains the new libraries and how to use them effectively for robot-to-robot communication.
+## Main Documentation
+***<a href="https://kb.vex.com/hc/en-us/articles/360049619171-Coding-the-VEX-AI-Robot">Coding the VEX AI Robot</a>***
 
 ## Additional Resources
 
